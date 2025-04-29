@@ -43,8 +43,12 @@ export const useCheckout = ({ cartItems, clearCart }: UseCheckoutProps) => {
       }
 
       if (data && data.url) {
-        // Redirect to Stripe Checkout
-        window.location.href = data.url;
+        // Open Stripe Checkout in a new tab instead of redirecting
+        window.open(data.url, '_blank');
+        toast({
+          title: "Procesando pago",
+          description: "Se ha abierto una nueva ventana para completar tu pago",
+        });
       } else {
         throw new Error('No se obtuvo una URL válida para el checkout');
       }
