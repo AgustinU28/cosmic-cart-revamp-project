@@ -14,12 +14,9 @@ serve(async (req) => {
   }
 
   try {
-    // Asegúrate de que la clave secreta de Stripe esté disponible
-    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeSecretKey) {
-      throw new Error("La clave secreta de Stripe no está configurada");
-    }
-
+    // Usar directamente la clave proporcionada como variable de entorno
+    const stripeSecretKey = "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";
+    
     // Inicializar Stripe con la clave secreta
     const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2023-10-16",
@@ -57,6 +54,8 @@ serve(async (req) => {
       };
     });
 
+    console.log("Creating checkout session with line items:", lineItems);
+
     // Create a Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -68,6 +67,8 @@ serve(async (req) => {
         allowed_countries: ["US", "CA", "MX", "ES"],
       },
     });
+
+    console.log("Checkout session created:", session.id);
 
     // Return the session ID and URL
     return new Response(JSON.stringify({ 
