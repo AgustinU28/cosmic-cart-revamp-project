@@ -5,12 +5,15 @@ import Layout from '@/components/layout/Layout';
 import { useCartContext } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Trash2, ArrowLeft, Plus, Minus } from 'lucide-react';
+import { Trash2, ArrowLeft, Plus, Minus, Loader2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { supabase } from "@/integrations/supabase/client";
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart, getSubtotal } = useCartContext();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = React.useState(false);
+  
   const subtotal = getSubtotal();
   const shipping = subtotal > 50 ? 0 : 4.99;
   const total = subtotal + shipping;
@@ -31,12 +34,52 @@ const CartPage = () => {
     });
   };
 
-  const handleCheckout = () => {
-    toast({
-      title: "Procesando pedido",
-      description: "Redirigiendo al proceso de pago...",
-    });
-    // Aquí se implementaría la redirección al checkout
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Carrito vacío",
+        description: "Agrega productos a tu carrito antes de proceder al pago",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { origin } = window.location;
+      const successUrl = `${origin}/payment-success`;
+      const cancelUrl = `${origin}/cart`;
+
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          cartItems,
+          successUrl,
+          cancelUrl
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Error al crear la sesión de pago');
+      }
+
+      if (data && data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } else {
+        throw new Error('No se obtuvo una URL válida para el checkout');
+      }
+
+    } catch (error: any) {
+      console.error('Error en el proceso de checkout:', error);
+      toast({
+        title: "Error en el proceso de pago",
+        description: error.message || "Ocurrió un error inesperado",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -225,9 +268,17 @@ const CartPage = () => {
               
               <Button 
                 onClick={handleCheckout}
+                disabled={isLoading}
                 className="w-full bg-ecommerce-blue hover:bg-blue-700 text-lg py-6"
               >
-                Proceder al pago
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Procesando...
+                  </>
+                ) : (
+                  'Proceder al pago'
+                )}
               </Button>
               
               <div className="mt-6 text-sm text-gray-500">
