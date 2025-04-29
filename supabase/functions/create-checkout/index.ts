@@ -14,7 +14,14 @@ serve(async (req) => {
   }
 
   try {
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    // Asegúrate de que la clave secreta de Stripe esté disponible
+    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeSecretKey) {
+      throw new Error("La clave secreta de Stripe no está configurada");
+    }
+
+    // Inicializar Stripe con la clave secreta
+    const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2023-10-16",
     });
 
