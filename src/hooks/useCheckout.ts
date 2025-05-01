@@ -42,6 +42,14 @@ export const useCheckout = ({ cartItems, clearCart }: UseCheckoutProps) => {
         throw new Error(error.message || 'Error al crear la sesión de pago');
       }
 
+      if (!data) {
+        throw new Error('No se recibió respuesta del servidor');
+      }
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       if (data && data.url) {
         // Open Stripe Checkout in a new tab instead of redirecting
         window.open(data.url, '_blank');

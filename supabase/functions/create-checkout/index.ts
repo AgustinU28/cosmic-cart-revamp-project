@@ -14,8 +14,10 @@ serve(async (req) => {
   }
 
   try {
-    // Using a valid Stripe test key for testing purposes
-    const stripeSecretKey = "sk_test_51N4Q4YAW9pzx0aQaCprdYeyraNKrs4Ckzgg1ZPViBnSQRvA1cZhxb6CNFYFTGcPs9W0NbqLYSz1ZrY9pktSUmDqT00wNP5McX9";
+    // Usar una clave de prueba de Stripe válida
+    // IMPORTANTE: Esta es una clave de prueba pública para propósitos de demostración
+    // En producción, siempre usa Deno.env.get("STRIPE_SECRET_KEY")
+    const stripeSecretKey = "sk_test_51OkB7yIFhfmGnwKyO6OA4B3Lb7MEFvatIRal6jnl1UzeZQ3E0tayqbxM3woEfR2r5Q2mYVubhBa4tIpNJ8EsFCf800lcZpGjxL";
     
     // Inicializar Stripe con la clave secreta
     const stripe = new Stripe(stripeSecretKey, {
