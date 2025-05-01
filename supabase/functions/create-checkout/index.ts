@@ -14,8 +14,8 @@ serve(async (req) => {
   }
 
   try {
-    // Usar directamente la clave proporcionada como variable de entorno
-    const stripeSecretKey = "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";
+    // Using a Stripe test key instead of live key for testing purposes
+    const stripeSecretKey = "sk_test_51N4Q4YAW9pzx0aQaCprdYeyraNKrs4Ckzgg1ZPViBnSQRvA1cZhxb6CNFYFTGcPs9W0NbqLYSz1ZrY9pktSUmDqT00wNP5McX9";
     
     // Inicializar Stripe con la clave secreta
     const stripe = new Stripe(stripeSecretKey, {
