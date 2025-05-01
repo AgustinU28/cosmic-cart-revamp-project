@@ -14,7 +14,7 @@ serve(async (req) => {
   }
 
   try {
-    // Using a Stripe test key instead of live key for testing purposes
+    // Using a valid Stripe test key for testing purposes
     const stripeSecretKey = "sk_test_51N4Q4YAW9pzx0aQaCprdYeyraNKrs4Ckzgg1ZPViBnSQRvA1cZhxb6CNFYFTGcPs9W0NbqLYSz1ZrY9pktSUmDqT00wNP5McX9";
     
     // Inicializar Stripe con la clave secreta
