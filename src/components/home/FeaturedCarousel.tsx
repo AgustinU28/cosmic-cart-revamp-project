@@ -26,7 +26,7 @@ const featuredItems: FeaturedItem[] = [
     id: '2',
     title: 'Tecnología de última generación',
     description: 'Los mejores dispositivos electrónicos con descuentos exclusivos',
-    image: 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?auto=format&fit=crop&w=1200&h=600',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=600',
     buttonText: 'Explorar',
     link: '/category/electronics'
   },

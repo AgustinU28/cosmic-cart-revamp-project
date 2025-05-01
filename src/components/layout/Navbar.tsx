@@ -37,7 +37,11 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="text-2xl font-bold text-ecommerce-blue">
-              CosmicShop
+              <img 
+                src="/lovable-uploads/8d7ee286-422e-40e4-a999-d149a6fbb7a9.png" 
+                alt="CosmicShop Logo" 
+                className="h-12 w-auto"
+              />
             </Link>
           </div>
 
