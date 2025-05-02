@@ -30,6 +30,12 @@ export const useCheckout = ({ cartItems, clearCart }: UseCheckoutProps) => {
       const successUrl = `${origin}/payment-success`;
       const cancelUrl = `${origin}/cart`;
 
+      console.log("Enviando solicitud a create-checkout con:", { 
+        cartItems, 
+        successUrl, 
+        cancelUrl 
+      });
+
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: {
           cartItems,
@@ -39,14 +45,17 @@ export const useCheckout = ({ cartItems, clearCart }: UseCheckoutProps) => {
       });
 
       if (error) {
+        console.error("Error de la función create-checkout:", error);
         throw new Error(error.message || 'Error al crear la sesión de pago');
       }
 
       if (!data) {
+        console.error("No se recibió respuesta del servidor");
         throw new Error('No se recibió respuesta del servidor');
       }
 
       if (data.error) {
+        console.error("Error en la respuesta:", data.error);
         throw new Error(data.error);
       }
 

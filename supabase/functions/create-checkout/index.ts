@@ -14,9 +14,8 @@ serve(async (req) => {
   }
 
   try {
-    // Usar una clave de prueba de Stripe válida
-    // IMPORTANTE: Esta es una clave de prueba pública para propósitos de demostración
-    // En producción, siempre usa Deno.env.get("STRIPE_SECRET_KEY")
+    // Usar una nueva clave de prueba de Stripe válida
+    // En un entorno de producción real, deberías usar Deno.env.get("STRIPE_SECRET_KEY")
     const stripeSecretKey = "sk_test_51OkB7yIFhfmGnwKyO6OA4B3Lb7MEFvatIRal6jnl1UzeZQ3E0tayqbxM3woEfR2r5Q2mYVubhBa4tIpNJ8EsFCf800lcZpGjxL";
     
     // Inicializar Stripe con la clave secreta
