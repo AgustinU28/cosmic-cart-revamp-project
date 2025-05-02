@@ -22,7 +22,7 @@ serve(async (req) => {
       throw new Error("Stripe API key not configured");
     }
     
-    // Inicializar Stripe con la clave secreta
+    // Initialize Stripe with the secret key
     const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2023-10-16",
     });
