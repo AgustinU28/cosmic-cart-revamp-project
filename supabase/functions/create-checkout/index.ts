@@ -59,7 +59,7 @@ serve(async (req) => {
       };
     });
 
-    console.log("Creating checkout session with line items:", lineItems);
+    console.log("Creating checkout session with line items:", JSON.stringify(lineItems));
 
     // Create a Checkout Session
     const session = await stripe.checkout.sessions.create({
