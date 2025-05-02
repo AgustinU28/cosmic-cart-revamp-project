@@ -14,9 +14,13 @@ serve(async (req) => {
   }
 
   try {
-    // Usar una nueva clave de prueba de Stripe válida
-    // En un entorno de producción real, deberías usar Deno.env.get("STRIPE_SECRET_KEY")
-    const stripeSecretKey = "sk_test_51OkB7yIFhfmGnwKyO6OA4B3Lb7MEFvatIRal6jnl1UzeZQ3E0tayqbxM3woEfR2r5Q2mYVubhBa4tIpNJ8EsFCf800lcZpGjxL";
+    // Use the secret key from environment variables
+    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
+    
+    if (!stripeSecretKey) {
+      console.error("No Stripe secret key found in environment variables");
+      throw new Error("Stripe API key not configured");
+    }
     
     // Inicializar Stripe con la clave secreta
     const stripe = new Stripe(stripeSecretKey, {
