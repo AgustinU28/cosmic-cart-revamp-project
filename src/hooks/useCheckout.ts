@@ -60,7 +60,7 @@ export const useCheckout = ({ cartItems, clearCart }: UseCheckoutProps) => {
       }
 
       if (data && data.url) {
-        // Open Stripe Checkout in a new tab instead of redirecting
+        // Open Stripe Checkout in a new tab
         window.open(data.url, '_blank');
         toast({
           title: "Procesando pago",

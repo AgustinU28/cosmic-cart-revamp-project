@@ -25,6 +25,12 @@ serve(async (req) => {
       throw new Error("Stripe API key not configured");
     }
     
+    // Validate that the key looks like a secret key
+    if (stripeSecretKey.startsWith('pk_')) {
+      console.error("Publishable key provided instead of secret key");
+      throw new Error("Invalid Stripe API key: must use secret key (sk_)");
+    }
+    
     // Initialize Stripe with the secret key
     const stripe = new Stripe(stripeSecretKey, {
       apiVersion: "2023-10-16",
