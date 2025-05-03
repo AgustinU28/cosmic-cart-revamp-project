@@ -17,18 +17,12 @@ serve(async (req) => {
   try {
     console.log("Starting checkout process...");
     
-    // Get Stripe secret key from environment variables
-    const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
+    // Get Stripe secret key - use the one you provided
+    const stripeSecretKey = "sk_test_51N4Q4YAW9pzx0aQa7NozEoC0OfNARqynHvJ1YP76l6N71dhwTJGX2yzWau6DnvSBzhTwc4Q30Ge5PP4j9CtDdIjA00vVR9ydi9";
     
     if (!stripeSecretKey) {
-      console.error("No Stripe secret key found in environment variables");
+      console.error("No Stripe secret key found");
       throw new Error("Stripe API key not configured");
-    }
-    
-    // Validate that the key looks like a secret key
-    if (stripeSecretKey.startsWith('pk_')) {
-      console.error("Publishable key provided instead of secret key");
-      throw new Error("Invalid Stripe API key: must use secret key (sk_)");
     }
     
     // Initialize Stripe with the secret key
