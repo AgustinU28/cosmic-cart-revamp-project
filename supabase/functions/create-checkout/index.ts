@@ -22,6 +22,12 @@ serve(async (req) => {
       console.error("No Stripe secret key found in environment variables");
       throw new Error("Stripe API key not configured");
     }
+
+    // Validate that it's a secret key, not a publishable key
+    if (stripeSecretKey.startsWith('pk_')) {
+      console.error("Publishable key provided instead of secret key");
+      throw new Error("Invalid Stripe API key: must use secret key (sk_)");
+    }
     
     // Initialize Stripe with the secret key
     const stripe = new Stripe(stripeSecretKey, {
